@@ -190,5 +190,35 @@ RSpec.describe Codebreaker do
         game.guess(input)
       end
     end
+    context "[H] with ambiguous matches and duplicates in secret number" do
+      it "secret number has 2 duplicates and guess has 2 number matches" do
+        game.start('1214')
+        input = '3151'
+        expect(output).to receive(:puts).with('--')
+
+        game.guess(input)
+      end
+      it "secret number has 2 duplicates and guess has 2 exact matches" do
+        game.start('1214')
+        input = '1315'
+        expect(output).to receive(:puts).with('++')
+
+        game.guess(input)
+      end
+      it "secret number has 2 duplicates and guess has 2 exact matches and a number match" do
+        game.start('1214')
+        input = '1415'
+        expect(output).to receive(:puts).with('++-')
+
+        game.guess(input)
+      end
+      it "secret number is 1122 and guess is 1112" do
+        game.start('1122')
+        input = '1112'
+        expect(output).to receive(:puts).with('+++')
+
+        game.guess(input)
+      end
+    end
   end
 end

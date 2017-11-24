@@ -19,25 +19,25 @@ class Codebreaker
     def answer(input)
       return "Try guessing a number with four digits" if input.length != 4
       answer = ['']
-      number_of_exact_matches(input).times {|i| answer<<"+"}
-      number_of_misplaced_matches(input).times {|i| answer<<"-"}
+      answer<<has_matches(input)
       answer.join('')
     end
-    def number_of_exact_matches(input)
-      i_array = input.split('')
-      i_array
-      .select{|element| i_array.index(element)==secret_array.index(element)}
-      .length
-    end
-    def number_of_misplaced_matches(input)
-      i_array = input.split('')
-      i_array
-      .select{|element| i_array.index(element)!=secret_array.index(element) && @secret_number.include?(element)}
-      .length
+    def has_matches(input)
+      answer=[]
+      secret_array_mutable = secret_array
+      input.split('').each_with_index do |element, index|
+        if element == secret_array[index]
+          answer<<"+"
+          secret_array_mutable[index]="x"
+        elsif secret_array_mutable.include?(element)
+          answer<<"-"
+          secret_array_mutable[secret_array_mutable.index(element)]="x"
+        end
+      end
+      answer.sort.join("")
     end
     def secret_array
       @secret_number.split('')
     end
-
   end
 end
