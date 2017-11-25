@@ -18,9 +18,8 @@ class Codebreaker
     end
     def answer(input)
       return "Try guessing a number with four digits" if input.length != 4
-      answer = ['']
-      answer<<has_matches(input)
-      answer.join('')
+      answer = ''
+      answer+has_matches(input)
     end
     def has_matches(input)
       answer=[]
